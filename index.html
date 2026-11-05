@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  ============================================================
+  FILE: index.html  -  Air Store (Nike Air Max-inspired demo shop)
+  ============================================================
+  1. WHAT THIS FILE IS USED FOR
+     Home page: the Air Max hero with three selectable sneakers.
+  2. MAIN COMPONENTS
+     Header (logo, Men/Women/Kids/Collections/Sale, search, account,
+     bag, menu), the page content, the shared slide-in panels (menu,
+     collections, search, account, bag, checkout), footer, cookie banner.
+  3. DEPENDENCIES
+     assets/css/style.css + responsive.css; assets/js/config.js and
+     analytics.js (in <head>); main.js, navigation.js, cart.js,
+     products.js (end of <body>, in that order).
+  4. SAFE CUSTOMIZATION AREAS
+     Visible text, headings and link labels. Keep every id="..." and
+     data-... attribute: the JavaScript uses them to find elements.
+     Products, prices and photos are edited in assets/js/config.js.
+  5. ANALYTICS CONFIGURATION LOCATION
+     GTM ID: assets/js/config.js. GTM loader section: just below.
+     GTM noscript section: right after <body>.
+  NOTE: Educational prototype, not an official Nike website and not
+  affiliated with Nike, Inc. No Nike logo is used.
+  ============================================================
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Air Store - Nike Air Max (demo)</title>
+<meta name="description" content="Home page: the Air Max hero with three selectable sneakers.">
+
+<!-- ==========================================
+     GA4 AND GTM INTEGRATION SECTION
+     ==========================================
+
+     Purpose:
+     This section is reserved for Google Analytics 4
+     and Google Tag Manager integration.
+
+     GA4 Measurement ID: G-XXXXXXXXXX   (enter it inside GTM)
+     GTM Container ID:   GTM-XXXXXXX    (set in assets/js/config.js)
+
+     IMPORTANT:
+     Replace placeholder IDs with real IDs in assets/js/config.js.
+     analytics.js inserts the official GTM container snippet
+     (loadGoogleTagManager) only when a real ID is set AND the
+     visitor clicked "Accept" in the cookie banner.
+     Do not delete this section.
+
+     Avoid installing GA4 twice.
+     GA4 is configured through GTM, so do NOT add a separate
+     gtag.js / GA4 snippet here.
+========================================== -->
+<script src="assets/js/config.js"></script>
+<script src="assets/js/analytics.js"></script>
+<!-- ========== END GA4 AND GTM INTEGRATION SECTION ========== -->
+
+<!-- Fonts: Anton (big condensed titles) and Inter (text). Safe to change in style.css. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Photos are served by Unsplash's image CDN. -->
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+</head>
+<body data-page="index">
+<!-- ==========================================
+     GTM NOSCRIPT SECTION (keep immediately after <body>)
+     ==========================================
+     After replacing GTM-XXXXXXX with your real container ID, remove the
+     comment markers around the <noscript> block below. It only matters
+     for visitors who have JavaScript turned off.
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+========================================== -->
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ============================================================
+     HEADER (same on every page)
+     ============================================================ -->
+<header class="site-header">
+  <!-- LINK: Logo
+       Handler: handleNavigationClick() in navigation.js
+       Result: home page opens. Analytics: navigation_clicked (link_location=header). -->
+  <a class="logo" href="index.html" data-nav-location="header" data-nav-label="Logo" aria-label="Air Store home">
+    <svg class="logo__mark" viewBox="0 0 56 28" aria-hidden="true" focusable="false"><rect x="2" y="4" width="52" height="20" rx="10" fill="none" stroke="currentColor" stroke-width="3"/><rect x="10" y="10" width="26" height="8" rx="4" fill="currentColor"/><circle cx="44" cy="14" r="3" fill="#C8102E"/></svg><span class="logo__text">Air Store</span>
+  </a>
+
+  <!-- LINKS: Men, Women, Kids, Sale
+       Handler: handleNavigationClick() in navigation.js
+       Result: products.html opens filtered to that category.
+       Analytics: navigation_clicked (link_text, link_url, link_location=header);
+       the next page then sends view_item_list. -->
+  <nav class="main-nav" aria-label="Shop categories">
+    <ul>
+        <li><a href="products.html?category=men" data-nav-location="header">Men<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="nav-chevron"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="products.html?category=women" data-nav-location="header">Women<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="nav-chevron"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <li><a href="products.html?category=kids" data-nav-location="header">Kids<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="nav-chevron"><path d="m6 9 6 6 6-6"/></svg></a></li>
+        <!-- BUTTON: Collections
+             Handler: openCollectionsPanel() in navigation.js
+             Result: Collections panel opens. Analytics: navigation_clicked
+             (link_text=Collections, link_url=#collections). -->
+        <li><button type="button" data-open="collections" data-nav-location="header" aria-expanded="false" aria-controls="collections-panel">Collections<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="nav-chevron"><path d="m6 9 6 6 6-6"/></svg></button></li>
+        <li><a href="products.html?category=sale" data-nav-location="header">Sale<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="nav-chevron"><path d="m6 9 6 6 6-6"/></svg></a></li>
+    </ul>
+  </nav>
+
+  <div class="header-icons">
+    <!-- BUTTON: Search
+         Handler: openSearchPanel() in navigation.js
+         Result: search panel opens. Analytics: none on open; "search" on submit. -->
+    <button type="button" class="icon-btn" data-open="search" aria-label="Search" aria-expanded="false" aria-controls="search-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+    <!-- BUTTON: Account
+         Handler: openAccountPanel() in navigation.js
+         Result: demonstration account panel opens. Analytics: none. -->
+    <button type="button" class="icon-btn" data-open="account" aria-label="Account" aria-expanded="false" aria-controls="account-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg></button>
+    <!-- BUTTON: Shopping bag (with item count)
+         Handler: openShoppingCart() in cart.js
+         Result: bag drawer slides in. Analytics: view_cart (only when the bag has items). -->
+    <button type="button" class="icon-btn bag-btn" data-open-cart aria-label="Shopping bag" aria-expanded="false" aria-controls="cart-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="bag-count" data-cart-count hidden>0</span></button>
+    <!-- BUTTON: Menu (hamburger)
+         Handler: openMenuPanel() in navigation.js
+         Result: navigation panel slides in. Analytics: none on open. -->
+    <button type="button" class="icon-btn" data-open="menu" aria-label="Menu" aria-expanded="false" aria-controls="menu-panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO (index.html only)
+     ============================================================ -->
+<main class="hero" id="main">
+  <!-- Giant low-contrast background word. Decorative only. -->
+  <p class="hero__bg-text" aria-hidden="true">AIR MAX</p>
+
+  <div class="hero__copy">
+    <h1 class="hero__title">Nike<br>Air Max</h1>
+    <p class="hero__tagline">Feel the future.<br>Move with Air.</p>
+    <p class="hero__now">
+      <span class="hero__counter" id="hero-counter">03 / 03</span>
+      <span class="hero__product" id="hero-product-name">Nike Air Max Excee</span>
+      <span class="hero__price" id="hero-product-price">&#8377;9,995</span>
+    </p>
+    <!-- BUTTON (link): SHOP NOW
+         Handler: handleShopNowClick() in products.js
+         Result: product page of the selected sneaker (products.html?id=...).
+         Analytics: shop_now_clicked (item_id, item_name, button_location=hero);
+         then view_item on the product page. -->
+    <a class="btn btn--dark btn--shop" id="shop-now-btn" href="products.html?id=air-max-excee">Shop now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+  </div>
+
+  <div class="hero__stage">
+    <div class="hero__float">
+      <img class="hero__image" id="hero-image" src="https://images.unsplash.com/photo-1634316427452-3eac60a2803d?auto=format&fit=crop&w=1400&q=80" alt="White low-top sneaker with a black swoosh, side view on a light grey background" width="1400" height="933" fetchpriority="high">
+    </div>
+    <div class="hero__shadow" aria-hidden="true"></div>
+    <!-- BUTTONS: dots (one per sneaker). Handler: selectProduct(id, "dot"). Analytics: select_item. -->
+    <div class="hero__dots" id="hero-dots" aria-label="Choose sneaker"></div>
+    <p class="hero__credit" id="hero-credit"></p>
+  </div>
+
+  <div class="hero__bottom">
+    <!-- BUTTON: Previous sneaker. Handler: showNextProduct(-1). Analytics: select_item (selection_method=arrow). -->
+    <button type="button" class="round-btn" id="hero-prev-btn" aria-label="Previous sneaker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <!-- Three product cards, drawn by renderFeaturedCards() in products.js. -->
+    <ul class="product-cards" id="product-cards" aria-label="Featured sneakers"></ul>
+    <!-- BUTTON: Next sneaker. Handler: showNextProduct(1). Analytics: select_item (selection_method=arrow). -->
+    <button type="button" class="round-btn" id="hero-next-btn" aria-label="Next sneaker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7"/></svg></button>
+    <!-- LINKS: Social icons. Addresses come from config.js (socialLinks).
+         Open in a new tab. Analytics: none from site code; GA4 Enhanced
+         Measurement may record an automatic outbound "click". -->
+    <ul class="social social--hero" aria-label="Social media">
+      <li><a href="#" data-social="instagram" target="_blank" rel="noopener" aria-label="Instagram (opens in a new tab)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.6" fill="currentColor"/></svg></a></li>
+      <li><a href="#" data-social="youtube" target="_blank" rel="noopener" aria-label="YouTube (opens in a new tab)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="m10 9.5 5 2.5-5 2.5z" fill="currentColor"/></svg></a></li>
+      <li><a href="#" data-social="facebook" target="_blank" rel="noopener" aria-label="Facebook (opens in a new tab)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg></a></li>
+      <li><a href="#" data-social="x" target="_blank" rel="noopener" aria-label="X (opens in a new tab)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4l16 16M20 4 4 20"/></svg></a></li>
+    </ul>
+  </div>
+  <p class="visually-hidden" id="hero-live" aria-live="polite"></p>
+</main>
+
+<footer class="site-footer">
+
+  <p><span data-disclaimer></span> &copy; <span id="current-year">2026</span>.
+  <!-- LINK: Photo credits. Opens the credits line on products.html. -->
+  <a href="products.html#photo-credits">Photo credits</a></p>
+</footer>
+
+<!-- ============================================================
+     SHARED PANELS (hidden until opened). Closed by the X button,
+     the dark backdrop or the Escape key (initPanels in main.js).
+     ============================================================ -->
+<div class="backdrop" id="panel-backdrop" hidden></div>
+
+<!-- MENU PANEL (hamburger) -->
+<aside class="panel panel--right" id="menu-panel" hidden role="dialog" aria-modal="true" aria-labelledby="menu-title">
+  <div class="panel__head">
+    <h2 id="menu-title">Menu</h2>
+    <!-- BUTTON: Close menu. Handler: closePanel() in main.js. Analytics: none. -->
+    <button type="button" class="icon-btn" data-close-panel aria-label="Close menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <!-- LINKS: every link sends navigation_clicked with link_location=menu_panel. -->
+  <ul class="menu-list">
+    <li><a href="products.html" data-nav-location="menu_panel">All sneakers</a></li>
+    <li><a href="products.html?category=men" data-nav-location="menu_panel">Men</a></li>
+    <li><a href="products.html?category=women" data-nav-location="menu_panel">Women</a></li>
+    <li><a href="products.html?category=kids" data-nav-location="menu_panel">Kids</a></li>
+    <!-- BUTTON: Collections (menu). Handler: openCollectionsPanel(). Analytics: navigation_clicked (link_location=menu_panel). -->
+    <li><button type="button" data-open="collections" data-nav-location="menu_panel">Collections</button></li>
+    <li><a href="products.html?category=sale" data-nav-location="menu_panel">Sale</a></li>
+    <li><a href="cart.html" data-nav-location="menu_panel">Bag</a></li>
+  </ul>
+  <p class="panel__note" data-disclaimer></p>
+</aside>
+
+<!-- COLLECTIONS PANEL (filled by openCollectionsPanel in navigation.js) -->
+<aside class="panel panel--right" id="collections-panel" hidden role="dialog" aria-modal="true" aria-labelledby="collections-title">
+  <div class="panel__head">
+    <h2 id="collections-title">Collections</h2>
+    <button type="button" class="icon-btn" data-close-panel aria-label="Close collections"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <ul class="collection-list" id="collections-list"></ul>
+</aside>
+
+<!-- SEARCH PANEL -->
+<div class="panel panel--top" id="search-panel" hidden role="dialog" aria-modal="true" aria-labelledby="search-title">
+  <div class="panel__head">
+    <h2 id="search-title">Search sneakers</h2>
+    <button type="button" class="icon-btn" data-close-panel aria-label="Close search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <form id="search-form" class="search-form" role="search">
+    <label for="search-input" class="visually-hidden">Search by name, colour or category</label>
+    <input type="search" id="search-input" placeholder="Search by name, colour or category" autocomplete="off" data-autofocus>
+    <!-- BUTTON: Search (submit)
+         Handler: handleSearchSubmit() in navigation.js
+         Result: results list. Analytics: search (search_term, result_count). -->
+    <button type="submit" class="btn btn--dark">Search</button>
+  </form>
+  <div id="search-results" aria-live="polite"></div>
+</div>
+
+<!-- ACCOUNT PANEL (demonstration only: no sign-in, no personal data) -->
+<aside class="panel panel--right" id="account-panel" hidden role="dialog" aria-modal="true" aria-labelledby="account-title">
+  <div class="panel__head">
+    <h2 id="account-title">Account</h2>
+    <button type="button" class="icon-btn" data-close-panel aria-label="Close account"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <p class="notice">Demo store: accounts are not available. Nothing here is linked to a person and no sign-in is needed.</p>
+  <!-- BUTTON: View bag (account panel). Handler: openShoppingCart(). Analytics: view_cart. -->
+  <button type="button" class="btn btn--outline btn--block" data-open-cart>View bag (<span data-cart-count-text>0 items</span>)</button>
+  <h3 class="panel__subtitle">Recently viewed on this device</h3>
+  <ul class="mini-list" id="recently-viewed"></ul>
+</aside>
+
+<!-- BAG (CART) DRAWER (filled by renderCart in cart.js) -->
+<aside class="panel panel--right panel--cart" id="cart-panel" hidden role="dialog" aria-modal="true" aria-labelledby="cart-title">
+  <div class="panel__head">
+    <h2 id="cart-title">Bag <small data-cart-count-text>0 items</small></h2>
+    <button type="button" class="icon-btn" data-close-panel aria-label="Close bag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <p class="empty" data-cart-empty>Your bag is empty. <a href="products.html">Find your next pair</a>.</p>
+  <ul class="cart-list" data-cart-list></ul>
+  <div class="cart-summary" data-cart-summary hidden>
+    <p class="cart-summary__row"><span>Total</span><strong data-cart-total>&#8377;0</strong></p>
+    <!-- BUTTON: Checkout (drawer)
+         Handler: startCheckout() in cart.js
+         Result: demo checkout panel; no payment. Analytics: begin_checkout (never purchase). -->
+    <button type="button" class="btn btn--dark btn--block" data-start-checkout>Checkout <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 17 17 7M9 7h8v8"/></svg></button>
+    <!-- LINK: Full bag page. Plain link to cart.html (which sends view_cart on load). -->
+    <a class="btn btn--outline btn--block" href="cart.html">View full bag</a>
+  </div>
+</aside>
+
+<!-- DEMO CHECKOUT PANEL -->
+<div class="panel panel--center" id="checkout-panel" hidden role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+  <div class="panel__head">
+    <h2 id="checkout-title">Demo checkout</h2>
+    <button type="button" class="icon-btn" data-close-panel aria-label="Close checkout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+  </div>
+  <div id="checkout-summary"></div>
+  <p class="notice">This is a demonstration store. <strong>No order was placed, nothing was charged and no payment details are collected.</strong> Your bag has been kept. A real store would connect a payment provider here.</p>
+  <!-- BUTTON: Back to bag. Handler: closePanel(). Analytics: none. -->
+  <button type="button" class="btn btn--dark btn--block" data-close-panel>Back to the store</button>
+</div>
+
+<!-- TOAST MESSAGES (showToast in main.js). Screen readers announce them. -->
+<div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="false"></div>
+
+<!-- COOKIE CONSENT BANNER (only when a real GTM ID is set and no choice was saved)
+     BUTTONS: Accept / Decline. Handler: handleConsentChoice() in analytics.js.
+     Result: banner closes; Accept loads Google Tag Manager, Decline keeps analytics off. -->
+<div class="consent" id="consent-banner" hidden role="region" aria-label="Cookie consent">
+  <p>We use cookies for anonymous shop statistics (Google Analytics). No personal details are collected.</p>
+  <div class="consent__actions">
+    <button type="button" class="btn btn--outline btn--small" id="consent-decline-btn">Decline</button>
+    <button type="button" class="btn btn--dark btn--small" id="consent-accept-btn">Accept</button>
+  </div>
+</div>
+
+<!-- JavaScript (keep this order) -->
+<script src="assets/js/main.js"></script>
+<script src="assets/js/navigation.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/products.js"></script>
+</body>
+</html>
